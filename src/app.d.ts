@@ -7,7 +7,12 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		interface Window {
+			Telegram?: {
+				WebApp?: any;
+			};
+		}
 	}
 }
 
-export {};
+export { };
