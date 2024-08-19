@@ -15,4 +15,6 @@ declare global {
 	}
 }
 
-export { };
+window.App = window.App;
+
+export {  };
