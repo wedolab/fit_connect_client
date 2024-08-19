@@ -54,6 +54,7 @@
         Telegram.WebApp not found. Make sure this script is running within a
         Telegram Mini App.
     </p>
+    <p>d.</p>
 {:else}
     <h2>Telegram.WebApp Data:</h2>
     <pre>{JSON.stringify(webAppData, null, 2)}</pre>
