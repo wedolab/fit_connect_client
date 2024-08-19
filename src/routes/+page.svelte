@@ -55,9 +55,10 @@
         Telegram Mini App.
     </p>
     <p>d.</p>
-{:else}
+    {:else}
     <h2>Telegram.WebApp Data:</h2>
     <pre>{JSON.stringify(webAppData, null, 2)}</pre>
+    <p>d.</p>
 
     <button on:click={sendAuthData}>Send Auth Data</button>
 {/if}
