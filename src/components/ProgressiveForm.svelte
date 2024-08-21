@@ -100,7 +100,7 @@
       {#each Array(3) as _, index}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="dot tertiary {currentStep === index ? 'tertiary-container' : ''}" on:click={() => {currentStep = index}}></div>
+        <div class="dark dot tertiary {currentStep === index ? 'tertiary-container' : ''}" on:click={() => {currentStep = index}}></div>
       {/each}
     </div>
   
