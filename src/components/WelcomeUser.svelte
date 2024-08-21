@@ -3,6 +3,8 @@
 
     const userInfo: any = webAppData?.initDataUnsafe;
     const firstName: String | undefined = userInfo?.first_name ?? 'Undefined';
+
+    alert(JSON.stringify(webAppData));
 </script>
 
 <h2> Welcome, {JSON.stringify(userInfo)} </h2>
