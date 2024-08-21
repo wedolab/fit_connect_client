@@ -12,17 +12,17 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #1c110c;
-    color: #e0c0b4; 
+    background-color: #161218;
+    color: #ebb2ff; 
 }
     
 .my-button {
     font-family: 'Nexa', sans-serif;
     width: 200px;
     height: 50px;
-    background-color: #642f18;
+    background-color: #3d0056;
     border-radius: 50px;
-    color: #ffc5af;
+    color: #d993f5;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -33,7 +33,7 @@ body {
 }
 
 .my-button:hover {
-    background-color: #53220c;
+    background-color: #4f0a6c;
 }
 
 .page-container {
@@ -42,4 +42,68 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+.primary {
+    background-color: #ebb2ff;
+}
+
+.on-primary {
+    color: #4f0a6c;
+}
+
+.primary-container {
+    background-color: #3d0056;
+}
+
+.on-primary-container {
+    color: #d993f5;
+}
+
+.secondary {
+    background-color: #ecb1ff;
+}
+
+.on-secondary {
+    color: #520071;
+}
+
+.secondary-container {
+    background-color: #a252c2;
+}
+
+.on-secondary-container {
+    color: #ffffff;
+}
+
+.tertiary {
+    background-color: #ebb2ff;
+}
+
+.on-tertiary {
+    color: #4d1266;
+}
+
+.tertiary-container {
+    background-color: #662d7f;
+}
+
+.on-tertiary-container {
+    color: #f7d5ff;
+}
+
+.surface {
+    background-color: #161218;
+}
+
+.on-surface {
+    color: #eadfe8;
+}
+
+.on-surface-variant {
+    color: #d0c2d1;
+}
+
+.surface-container {
+    background-color: #231e24;
 }

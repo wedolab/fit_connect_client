@@ -32,7 +32,6 @@
   .nav {
     display: flex;
     justify-content: space-around;
-    background-color: #40322c;
     padding: 10px 0;
   }
 
@@ -40,13 +39,11 @@
     cursor: pointer;
     padding: 10px;
     text-align: center;
-    color: #e0c0b4;
     font-size: large;
   }
 
   .active {
     font-weight: bold;
-    color: #e8d56f;
   }
 </style>
 
@@ -54,13 +51,13 @@
   <div class="content">
     <slot></slot> 
   </div>
-  <div class="nav">
+  <div class="nav surface-container">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     {#each items as item, index}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="nav-item {activeIndex === index ? 'active' : ''}"
+        class="nav-item {activeIndex === index ? 'on-primary-container active' : 'on-surface'}"
         on:click={() => handleNavigation(index)}
       >
         {item.label}

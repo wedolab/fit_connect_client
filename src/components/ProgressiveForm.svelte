@@ -70,11 +70,6 @@
     width: 40px;
     margin: 0 5px;
     border-radius: 12px;
-    background-color: #ffb599;
-  }
-
-  .active {
-    background-color: #9f3800;
   }
 
   .controll-button {
@@ -101,7 +96,7 @@
       {#each Array(3) as _, index}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="dot {currentStep === index ? 'active' : ''}" on:click={() => {currentStep = index}}></div>
+        <div class="dot tertiary {currentStep === index ? 'tertiary-container' : ''}" on:click={() => {currentStep = index}}></div>
       {/each}
     </div>
   
