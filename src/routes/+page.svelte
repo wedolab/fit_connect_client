@@ -1,4 +1,47 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
+  import '../app.css';
+  import { onMount } from "svelte";
+  import LoginButton from "../components/LogButton.svelte";
+  import WelcomeUser from "../components/WelcomeUser.svelte";
+  import CircularProgressIndicator from "../components/CircularProgressIndicator.svelte";
+
+  let isTelegramWebApp: boolean | undefined = false;
+  let webAppData: any = null;
+
+  const apiUrl: RequestInfo | URL = import.meta.env.VITE_API_URL;
+  const apiToken: String = import.meta.env.VITE_API_TOKEN;
+
+  let isLoading = false
+
+  function onClick() {isLoading = true};
+
+  onMount(() => {
+      isTelegramWebApp =
+          window.Telegram && window.Telegram.WebApp !== undefined;
+
+      if (isTelegramWebApp) {
+          webAppData = window.Telegram!.WebApp;
+      } else {
+          console.error(
+              "Telegram.WebApp not found. Make sure this script is running within a Telegram Mini App.",
+          );
+      }
+  });
+
 </script>
+
+<div class='page-container'>
+    <WelcomeUser webAppData={webAppData} />
+
+    {#if !isLoading} 
+            <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} onClick={onClick}/>
+
+            <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} hasUser={false} buttonTitle={'Sign Up'} onClick={onClick}/> 
+    {:else}
+        <CircularProgressIndicator />
+    {/if}
+
+</div>
+
+
 

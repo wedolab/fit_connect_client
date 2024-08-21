@@ -1,7 +1,8 @@
 <script lang="ts">
     export let webAppData: any;
-    const firstName = webAppData.initDataUnsafe.first_name;
-    const lastName = webAppData.initDataUnsafe.last_name;
+
+    const userInfo: any = webAppData?.initDataUnsafe;
+    const firstName: String | undefined = userInfo?.first_name ?? 'Undefined';
 </script>
 
-<h1> Welcome, {firstName} {lastName} </h1>
+<h2> Welcome, {firstName} </h2>
