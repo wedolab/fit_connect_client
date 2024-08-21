@@ -35,7 +35,7 @@
 </script>
 
 <div class='page-container'>
-    {#if webAppData === null}
+    {#if webAppData != null}
         <WelcomeUser webAppData={webAppData} />
 
         {#if !isLoading} 
