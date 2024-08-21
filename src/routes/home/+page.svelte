@@ -28,5 +28,5 @@
 </script>
 
 <BottomNavBar activeIndex={0}>
-
+    
 </BottomNavBar>

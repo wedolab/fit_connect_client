@@ -36,10 +36,6 @@ body {
     background-color: #4f0a6c;
 }
 
-.surface-container:hover {
-    background-color: var(--md-sys-color-surface-container-high);
-}
-
 .page-container {
     display: flex;
     flex-direction: column;

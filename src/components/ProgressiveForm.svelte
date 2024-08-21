@@ -77,6 +77,10 @@
         height: 36px;
     }
 
+  .surface-container:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+  } 
+
 </style>
 
 {#if !isLoading}
