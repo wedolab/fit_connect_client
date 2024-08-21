@@ -5,4 +5,4 @@
     const firstName: String | undefined = userInfo?.first_name ?? 'Undefined';
 </script>
 
-<h2> Welcome, {userInfo} </h2>
+<h2> Welcome, {JSON.stringify(userInfo)} </h2>
