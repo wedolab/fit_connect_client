@@ -35,16 +35,20 @@
 </script>
 
 <div class='page-container'>
-    <WelcomeUser webAppData={webAppData} />
+    {#if webAppData === null}
+        <WelcomeUser webAppData={webAppData} />
 
-    {#if !isLoading} 
-            <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} onClick={onClick}/>
+        {#if !isLoading} 
+                <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} onClick={onClick}/>
 
-            <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} hasUser={false} buttonTitle={'Sign Up'} onClick={onClick}/> 
+                <LoginButton webAppData={webAppData} apiToken={apiToken} apiUrl={apiUrl} hasUser={false} buttonTitle={'Sign Up'} onClick={onClick}/> 
+        {:else}
+            <CircularProgressIndicator />
+        {/if}
     {:else}
         <CircularProgressIndicator />
     {/if}
-
+   
 </div>
 
 
