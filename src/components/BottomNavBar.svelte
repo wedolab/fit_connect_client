@@ -1,6 +1,7 @@
 
 <!-- src/lib/BottomNavBar.svelte -->
 <script lang="ts">
+  import '../app.css';
   import { goto } from '$app/navigation';
 
   const items = [
@@ -27,6 +28,7 @@
   .content {
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
+    justify-content: center;
   }
 
   .nav {
