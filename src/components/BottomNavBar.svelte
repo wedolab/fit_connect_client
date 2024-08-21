@@ -51,7 +51,7 @@
   <div class="content">
     <slot></slot> 
   </div>
-  <div class="nav surface-container">
+  <div class="dark nav surface-container">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     {#each items as item, index}

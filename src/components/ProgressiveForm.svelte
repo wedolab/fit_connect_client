@@ -101,11 +101,11 @@
     </div>
   
     <div>
-      <button on:click={prevStep} class='my-button controll-button' disabled={currentStep == 0}>
-        Назад
+      <button on:click={prevStep} class='dark my-button controll-button {currentStep == 0 ? 'surface-container on-surface-variant' : ''}' disabled={currentStep == 0}>
+        Back
       </button>   
       <button on:click={nextStep} class='my-button controll-button'>
-        {currentStep < questions.length / 3 - 1 ? 'Далее' : 'Отправить'}
+        {currentStep < questions.length / 3 - 1 ? 'Next' : 'Send'}
       </button>   
     </div>
   </div>
