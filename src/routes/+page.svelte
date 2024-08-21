@@ -21,14 +21,10 @@
 
       if (isTelegramWebApp) {
           webAppData = window.Telegram!.WebApp;
-
-          alert(JSON.stringify(webAppData.initDataUnsafe));
       } else {
           console.error(
               "Telegram.WebApp not found. Make sure this script is running within a Telegram Mini App.",
           );
-
-          alert('Нет никаких данных');
       }
   });
 
