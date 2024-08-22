@@ -96,6 +96,17 @@
         padding: 0;
     }
 
+    .back-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        color: var(--md-sys-color-secondary);
+        margin: 0;
+        padding: 0;
+    }
+
 
     .container {
         margin: auto;
@@ -186,6 +197,6 @@
     </div>
 </div>
 
-<button style="position: absolute; top: 10px; left: 10px;" class="dark icon-button" on:click={goHome}>
+<button style="position: absolute; top: 10px; left: 10px;" class="dark back-button" on:click={goHome}>
     <LeftArrow />
 </button>
