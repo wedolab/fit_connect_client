@@ -3,6 +3,7 @@
   import CircularProgressIndicator from './CircularProgressIndicator.svelte';
   import InputForm from './InputForm.svelte';
   import { goto } from '$app/navigation';
+  import { fakeRequest } from '../utils/fakeRequest';
 
   const questions = [
     { id: 1, label: 'Question 1', answer: '' },
@@ -19,14 +20,7 @@
   let isLoading = false;
   let currentStep = 0;
 
-  function fakeRequest() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const fakeResponse = { message: 'Fake data received!' };
-                resolve(fakeResponse);
-            }, 2000); // Имитация задержки в 2 секунды
-        });
-    }
+ 
 
   async function nextStep()  {
     if (currentStep < questions.length / 3 - 1) {

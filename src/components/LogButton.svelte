@@ -2,6 +2,7 @@
 
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { fakeRequest } from '../utils/fakeRequest';
 
     export let buttonTitle: string = 'Login';
     export let webAppData: any;
@@ -9,17 +10,6 @@
     export let apiToken: String;
     export let onClick: Function;
     export let hasUser: boolean = true;
-
-
-
-    function fakeRequest() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const fakeResponse = { message: 'Fake data received!' };
-                resolve(fakeResponse);
-            }, 2000); // Имитация задержки в 2 секунды
-        });
-    }
   
     async function sendTestData() {
         onClick();
