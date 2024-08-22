@@ -147,6 +147,7 @@
         outline: none; 
         font-weight: bold; 
         padding-left: 12px;
+        margin-bottom: 20px;
     }
 
     .form-input:focus {
