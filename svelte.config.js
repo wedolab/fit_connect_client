@@ -24,8 +24,8 @@ const config = {
 
 		}),
 		paths: {
-            base: '/client'  
-        }
+			base: ''
+		}
 	}
 };
 
