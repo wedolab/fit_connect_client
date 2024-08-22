@@ -5,8 +5,8 @@
   import { goto } from '$app/navigation';
 
   const items = [
-      { label: 'Home', path: '/home' },
-      { label: 'Profile', path: '/profile' }
+      { label: 'Home', path: '/client/home' },
+      { label: 'Profile', path: '/client/profile' }
     ];
   
   export let activeIndex: number = 0;

@@ -20,7 +20,7 @@
         
 
         if (userInfo != undefined) {
-            await sendAuthData().then(() => goto('/home'));
+            await sendAuthData().then(() => goto('/client/home'));
         } 
     });
 

@@ -20,7 +20,6 @@
       <button class="my-button">Login with Google</button>   
       <div class="spacer"/>   
   </div>
-    
 </BottomNavBar>
 
 
