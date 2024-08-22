@@ -100,7 +100,7 @@
     .container {
         margin: auto;
         max-height: 45vh;
-        width: 60vw;
+        width: 80vw;
         overflow-y: auto;
         scrollbar-width: thin; /* Установите толщину скроллбара */
         scrollbar-color: var(--md-sys-color-on-secondary) var(--md-sys-color-secondary) ; /* Установите цвет скроллбара */
