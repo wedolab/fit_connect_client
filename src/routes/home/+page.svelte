@@ -47,6 +47,7 @@
         <UserInfo />
         <div class='spacer' />
         {#if targets.length > 0}
+            <h2>Our Goals:</h2>
             <select>
                 {#each targets as target}
                     <option value={target.id}>{target.goal}</option>

@@ -82,6 +82,13 @@
         max-width: 80%;
     }
 
+    .container {
+        margin: auto;
+        max-height: 45vh;
+        width: 60vw;
+        overflow-y: auto;
+    }
+
     .subTarget-container {
         margin-top: 20px;
     }
@@ -95,16 +102,16 @@
     <input type="text" bind:value={customTarget.goal} placeholder="Our Goal">
 
     {#if customTarget.subTargets.length > 0}
-        {#each customTarget.subTargets as subTarget, index (subTarget.id)}
-            {#if index < 5 || showMoreSubTargets}
+        <div class="container">
+            {#each customTarget.subTargets as subTarget, index (subTarget.id)}
                 <div class="subTarget-container">
                     <!-- svelte-ignore a11y-label-has-associated-control -->
                     <label>SubGoal {index + 1}</label>
                     <input type="text" bind:value={subTarget.subtarget}>
                     <button on:click={() => removeSubTarget(subTarget.id)}>Delete</button>
                 </div>
-            {/if}
-        {/each}
+            {/each}
+        </div>
     {/if}
 
     {#if customTarget.subTargets.length > 5 && !showMoreSubTargets}
