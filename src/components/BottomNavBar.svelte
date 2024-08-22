@@ -29,6 +29,7 @@
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
     justify-content: center;
+    width: 100vw;
   }
 
   .nav {

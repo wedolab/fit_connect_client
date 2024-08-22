@@ -24,7 +24,7 @@
 
 <style>
     .user-card {
-        height: 120px;
+        height: 85px;
         width: 280px;
         display: flex;
         align-items: center;
@@ -34,10 +34,10 @@
     }
 
     .avatar {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
         border-radius: 12px;
-        margin-right: 40px;
+        margin-right: 24px;
         margin-left: 16px;
     }
 

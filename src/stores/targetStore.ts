@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
-import { CustomTarget, SubTarget } from '../models/CustomTarget';
+import { CustomGoal, SubTarget } from '../models/CustomGoal';
 
-const initialData: CustomTarget[] = []; // Пустой массив начальных данных
+const initialData: CustomGoal[] = []; // Пустой массив начальных данных
 
 const targetStore = writable(initialData);
 
