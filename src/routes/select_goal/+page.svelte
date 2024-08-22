@@ -1,38 +1,53 @@
-<!-- +page.svelte -->
 <script lang="ts">
     import '../../app.css';
     import { goto } from '$app/navigation';
     import targetStore from '../../stores/targetStore'; // Импорт хранилища
     import { CustomGoal, SubTarget } from '../../models/CustomGoal';
     import { generateUUID } from '../../utils/uuidGenerator';
-
-    
+    import { onMount } from 'svelte';
+    import { tick } from 'svelte';
 
     let customTarget: CustomGoal = new CustomGoal(generateUUID(), '', [
        new SubTarget(generateUUID(), '', 0)
     ]);
+
+    let showMoreSubTargets = false;
+
+    onMount(() => {
+        tick().then(() => {
+            if (customTarget.subTargets.length > 5) {
+                showMoreSubTargets = true;
+            }
+        });
+    });
 
     function addSubTarget() {
         customTarget.subTargets = [
             ...customTarget.subTargets,
             new SubTarget(generateUUID(), '', 0)
         ];
+        
+        if (customTarget.subTargets.length > 5) {
+            showMoreSubTargets = true;
+        }
     }
 
     function removeSubTarget(subTargetId: string) {
         customTarget.subTargets = customTarget.subTargets.filter(subTarget => subTarget.id !== subTargetId);
+        
+        if (customTarget.subTargets.length <= 5) {
+            showMoreSubTargets = false;
+        }
     }
 
     function saveTarget() {
         if (customTarget.goal.length === 0) {
             alert('Need to add big goal name');
-
             return;
         }
 
         if (customTarget.subTargets.length < 1) {
             alert('Neet to add minimum 1 sub goal');
-
             return;
         }
 
@@ -42,6 +57,10 @@
 
     function goHome() {
         goto('/home');
+    }
+
+    function toggleSubTargets() {
+        showMoreSubTargets = !showMoreSubTargets;
     }
 </script>
 
@@ -77,13 +96,21 @@
 
     {#if customTarget.subTargets.length > 0}
         {#each customTarget.subTargets as subTarget, index (subTarget.id)}
-            <div class="subTarget-container">
-                <!-- svelte-ignore a11y-label-has-associated-control -->
-                <label>SubGoal {index + 1}</label>
-                <input type="text" bind:value={subTarget.subtarget}>
-                <button on:click={() => removeSubTarget(subTarget.id)}>Delete</button>
-            </div>
+            {#if index < 5 || showMoreSubTargets}
+                <div class="subTarget-container">
+                    <!-- svelte-ignore a11y-label-has-associated-control -->
+                    <label>SubGoal {index + 1}</label>
+                    <input type="text" bind:value={subTarget.subtarget}>
+                    <button on:click={() => removeSubTarget(subTarget.id)}>Delete</button>
+                </div>
+            {/if}
         {/each}
+    {/if}
+
+    {#if customTarget.subTargets.length > 5 && !showMoreSubTargets}
+        <div class="button-container">
+            <button on:click={toggleSubTargets} class="my-button">Show More Sub Goals</button>
+        </div>
     {/if}
 
     <div class="button-container">
