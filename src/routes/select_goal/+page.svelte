@@ -67,16 +67,7 @@
 </script>
 
 <style>
-    /* Центрирование контента по центру, за исключением правого верхнего угла */
-    :global(body) {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-start;
-        height: 100vh;
-        overflow: hidden;
-    }
+
 
     .content {
         margin: auto;
@@ -131,9 +122,11 @@
 
 
     .subTarget-container {
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-
+        
     .button-container {
         margin-top: 20px;
     }
@@ -176,14 +169,18 @@
     {#if customTarget.subTargets.length > 0}
         <div class="dark container">
             {#each customTarget.subTargets as subTarget, index (subTarget.id)}
-                <div class="subTarget-container">
-                    <!-- svelte-ignore a11y-label-has-associated-control -->
-                    <label>Small Step {index + 1}</label>
-                    <input type="text" class="input" bind:value={subTarget.subtarget}>
+            <div class="subTarget-container">
+                <!-- svelte-ignore a11y-label-has-associated-control -->
+                <label style="text-align: center;">Small Step {index + 1}</label>
+                <div style="display: flex; align-items: center;">
+                    <input type="text" class="input" style="flex: 1;" bind:value={subTarget.subtarget}>
                     <button on:click={() => removeSubTarget(subTarget.id)} class="dark icon-button">
-                        <Trash />
+                        <div style="top: 50%; transform: translateY(-40%);">
+                            <Trash />
+                        </div>
                     </button>
                 </div>
+            </div>
             {/each}
         </div>
     {/if}
