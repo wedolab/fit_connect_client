@@ -91,8 +91,8 @@
         background: none;
         border: none;
         cursor: pointer;
-        width: 24px;
-        height: 24px;
+        width: 40px;
+        height: 40px;
         color: var(--md-sys-color-secondary);
         margin: 0;
         padding: 0;
