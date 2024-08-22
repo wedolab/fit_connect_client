@@ -20,7 +20,7 @@
         
 
         if (userInfo != undefined) {
-            await sendAuthData().then(() => goto('/client/home'));
+            await sendAuthData().then(() => alert('Мы получили данные'));
         } 
     });
 
@@ -69,6 +69,6 @@
     {#if userInfo == null || undefined} 
         <h2>Telegram.WebApp not found.<br>Make sure this script is running within<br>a Telegram Mini App.</h2>
     {:else}
-        <CircularProgressIndicator />
+        <h2>Welcome {userInfo?.first_name}</h2>
     {/if}
 </div>
