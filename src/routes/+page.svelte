@@ -51,6 +51,10 @@
             );
         }
     }
+
+    function testGoto() {
+        goto('/home');
+    }
 </script>
 
 <style scope>
@@ -70,5 +74,7 @@
         <h2>Telegram.WebApp not found.<br>Make sure this script is running within<br>a Telegram Mini App.</h2>
     {:else}
         <h2>Welcome {userInfo?.first_name}</h2>
+        <h3>{JSON.stringify(webAppData)}</h3>
+        <button on:click={testGoto}>Go to Home</button>
     {/if}
 </div>
