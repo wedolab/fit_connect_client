@@ -4,17 +4,17 @@
   import UserInfo from "../../components/UserInfo.svelte";
   import OptionSelector from "../../components/OptionSelector.svelte";
   import ProductList from "../../components/ProductList.svelte";
+  import SubscribeList from "../../components/SubscribeList.svelte";
+  import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
   import { getProducts } from "../../utils/requests/getProducts";
   import { getSubscriptions } from "../../utils/requests/getSubscriptions";
   import { productStore } from "../../stores/productStore";
   import { userStore } from "../../stores/userStore";
-  import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
   import { homeOptionsStore, HomeOptions } from "../../stores/homeOptionsStore";
   import {
     subscriptionStore,
     subscriptionIdStore,
   } from "../../stores/subscriptionStore";
-  import SubscribeList from "../../components/SubscribeList.svelte";
 
   let isLoading: boolean = true;
   let err: any | undefined | null;
@@ -28,7 +28,7 @@
         console.log(reason);
         err = reason;
       });
-    await getSubscriptions("1034119315")
+    await getSubscriptions($userStore.id)
       .then((e) => {
         subscriptionStore.set(e);
         subscriptionIdStore.set(e.map((e) => e.product.id));
