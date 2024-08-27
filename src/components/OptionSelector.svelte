@@ -30,6 +30,7 @@
     border-radius: 16px;
     background-color: var(--md-sys-color-tertiary-container);
     padding: 4px;
+    margin-bottom: 20px;
   }
 
   .option {

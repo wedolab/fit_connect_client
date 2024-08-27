@@ -6,27 +6,28 @@ import { baseHeader, HttpMethod } from "./baseFetch";
 export async function getSubscriptions(userId: String): Promise<Subscription[]> {
     try {
         const response = await fetch(import.meta.env.VITE_CLIENT_SUBSCRIPTIONS_URL + userId, {
-            method: HttpMethod.POST,
+            method: HttpMethod.GET,
             headers: baseHeader,
         });
 
         if (!response.ok) {
             const error = response.statusText;
-            throw new Error("Network response is not ok: " + error);
+            const statusCode = response.status;
+            throw new Error("Network response is not ok: " + error + statusCode);
         }
 
-        const data = response.json();
-        if (Array.isArray(data)) {
-            const subscriptions = data.map((json) => {
-                const productData = json.product;
-                const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
+        const data = await response.json();
 
-                return new Subscription(product, new Date(json.created_at));
-            });
-            return subscriptions;
-        } else {
-            throw new Error("Data is not array");
-        }
+
+
+        const subscriptions = data.map((json: any) => {
+            const productData = json.product;
+            const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
+
+            return new Subscription(product, new Date(json.created_at));
+        });
+        return subscriptions;
+
 
 
     } catch (error) {

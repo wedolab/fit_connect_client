@@ -3,12 +3,18 @@
   import BottomNavBar from "../../components/BottomNavBar.svelte";
   import UserInfo from "../../components/UserInfo.svelte";
   import OptionSelector from "../../components/OptionSelector.svelte";
+  import ProductList from "../../components/ProductList.svelte";
   import { getProducts } from "../../utils/requests/getProducts";
   import { getSubscriptions } from "../../utils/requests/getSubscriptions";
   import { productStore } from "../../stores/productStore";
-  import { subscriptionStore } from "../../stores/subscriptionStore";
   import { userStore } from "../../stores/userStore";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
+  import { homeOptionsStore, HomeOptions } from "../../stores/homeOptionsStore";
+  import {
+    subscriptionStore,
+    subscriptionIdStore,
+  } from "../../stores/subscriptionStore";
+  import SubscribeList from "../../components/SubscribeList.svelte";
 
   let isLoading: boolean = true;
   let err: any | undefined | null;
@@ -17,13 +23,16 @@
 
   async function initHome() {
     await getProducts()
-      .then((e) => console.log(e))
+      .then((e) => productStore.set(e))
       .catch((reason) => {
         console.log(reason);
         err = reason;
       });
     await getSubscriptions("1034119315")
-      .then((e) => console.log(e))
+      .then((e) => {
+        subscriptionStore.set(e);
+        subscriptionIdStore.set(e.map((e) => e.product.id));
+      })
       .catch((reason) => {
         console.log(reason);
         err = reason;
@@ -37,15 +46,21 @@
   <div class="container">
     <UserInfo />
     {#if !isLoading}
-      <div class="spacer" />
       {#if err != null || undefined}
-        <h2 class="dark my-error">During data loading, an error occurred:</h2>
-        <h3 class="dark my-error">{err}</h3>
+        <div class="spacer" />
+        <div>
+          <h2 class="dark my-error">During data loading, an error occurred:</h2>
+          <h3 class="dark my-error">{err}</h3>
+        </div>
+        <div class="spacer" />
       {:else}
         <OptionSelector />
+        {#if $homeOptionsStore === HomeOptions.PRODUCTS}
+          <ProductList />
+        {:else if $homeOptionsStore === HomeOptions.SUBSCRIPTIONS}
+          <SubscribeList />
+        {/if}
       {/if}
-
-      <div class="spacer" />
     {:else}
       <div class="spacer" />
       <CircularProgressIndicator />
@@ -64,6 +79,7 @@
   }
 
   .my-error {
+    text-align: center;
     color: var(--md-sys-color-error);
   }
 </style>
