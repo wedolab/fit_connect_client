@@ -6,13 +6,14 @@
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
 
   let isLoading: boolean = false;
+  let iframeUrl: string | undefined | null;
 
   async function onClick() {
     isLoading = true;
     await getGoogleAuth($userStore.id ?? "1034119315")
       .then((redirect) => {
         if (redirect != false) {
-          window.location.href = redirect;
+          window.location.replace(redirect);
         }
       })
       .catch((reason) => console.log(reason));
