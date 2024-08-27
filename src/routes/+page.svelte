@@ -18,7 +18,7 @@
     userInfo = webAppData?.initDataUnsafe?.user;
 
     if (userInfo != undefined) {
-      userStore.update(userInfo);
+      userStore.set(userInfo);
       await login();
     }
   });

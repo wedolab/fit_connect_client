@@ -22,4 +22,7 @@ vite.config.ts.timestamp-*
 # Local Netlify folder
 .netlify
 
+# local folder with vscode settings
+.vscode
+
 build/

@@ -1,19 +1,21 @@
-import { baseFecth, HttpMethod } from "./baseFetch";
+import { baseHeader, HttpMethod } from "./baseFetch";
 
 export async function postAuthData(webAppData: any): Promise<void> {
-    return baseFecth<void>({
-        apiUrl: import.meta.env.VITE_AUTH_URL,
-        method: HttpMethod.POST,
-        body: webAppData,
-        onResponse: (response: Response, resolve: Function) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+    try {
+        const response = await fetch(import.meta.env.VITE_AUTH_URL,
+            {
+                method: HttpMethod.POST,
+                headers: baseHeader,
+                body: JSON.stringify(webAppData),
             }
-            console.log("Data sent successfully!");
-            resolve(response);
-        },
-        onReject: (error: any) => {
-            console.error("Error sending data:", error);
+        );
+
+        if (!response.ok) {
+            throw new Error("Network response is not ok");
         }
-    });
+    } catch (error) {
+        console.log(error);
+
+        throw error;
+    }
 }

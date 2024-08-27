@@ -1,33 +1,32 @@
 import { Product } from "../../models/Product";
 import { Subscription } from "../../models/Subscriptions";
-import { baseFecth, HttpMethod } from "./baseFetch";
- 
+import { baseHeader, HttpMethod } from "./baseFetch";
 
-export async function getSubscriptions(userId: String): Promise<Subscription[]>{
-    return baseFecth<Subscription[]>({
-        apiUrl: import.meta.env.VITE_CLIENT_SUBSCRIPTIONS_URL+userId,
-        method: HttpMethod.GET,
-        onResponse: async (response: Response, resolve: Function) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            try {
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                    const subscriptions = data.map((data) => transformJsonToData(data));
-                    resolve(subscriptions); // Возвращаем массив данных
-                } else {
-                    throw new Error("Response data is not an array");
-                }
-            } catch (error) {
-                console.error("Error parsing response:", error);
-                throw error;
-            }
-        },
-        onReject: (error: any) => {
-            console.error("Error sending data:", error);
+
+export async function getSubscriptions(userId: String): Promise<Subscription[]> {
+    try {
+        const response = await fetch(import.meta.env.VITE_CLIENT_SUBSCRIPTIONS_URL + userId, {
+            method: HttpMethod.POST,
+            headers: baseHeader,
+        });
+
+        if (!response.ok) {
+            throw new Error("Network response is not ok");
         }
-    });
+
+        const data = response.json();
+        if (Array.isArray(data)) {
+            const subscriptions = data.map(transformJsonToData);
+            return subscriptions;
+        } else {
+            throw new Error("Data is not array");
+        }
+
+
+    } catch (error) {
+        console.log("Something goes wrong: " + error)
+        throw error;
+    }
 }
 
 // Трансформер из JSON в массив Subscription
