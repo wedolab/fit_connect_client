@@ -11,18 +11,25 @@
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
 
   let isLoading: boolean = true;
-  let err: any | undefined;
+  let err: any | undefined | null;
 
   onMount(async () => initHome());
 
   async function initHome() {
-    try {
-      await getSubscriptions($userStore.id ?? "1034119315");
-      isLoading = false;
-    } catch (error) {
-      err = error;
-      isLoading = false;
-    }
+    await getProducts()
+      .then((e) => console.log(e))
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
+    await getSubscriptions("1034119315")
+      .then((e) => console.log(e))
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
+
+    isLoading = false;
   }
 </script>
 
@@ -30,14 +37,14 @@
   <div class="container">
     <UserInfo />
     {#if !isLoading}
-      <OptionSelector />
       <div class="spacer" />
-      {#if err != undefined}
-        <h2 class="dark my-error">
-          During data loading, an error occurred: <br />
-          {$err}
-        </h2>
+      {#if err != null || undefined}
+        <h2 class="dark my-error">During data loading, an error occurred:</h2>
+        <h3 class="dark my-error">{err}</h3>
+      {:else}
+        <OptionSelector />
       {/if}
+
       <div class="spacer" />
     {:else}
       <div class="spacer" />

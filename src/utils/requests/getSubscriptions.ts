@@ -11,12 +11,18 @@ export async function getSubscriptions(userId: String): Promise<Subscription[]> 
         });
 
         if (!response.ok) {
-            throw new Error("Network response is not ok");
+            const error = response.statusText;
+            throw new Error("Network response is not ok: " + error);
         }
 
         const data = response.json();
         if (Array.isArray(data)) {
-            const subscriptions = data.map(transformJsonToData);
+            const subscriptions = data.map((json) => {
+                const productData = json.product;
+                const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
+
+                return new Subscription(product, new Date(json.created_at));
+            });
             return subscriptions;
         } else {
             throw new Error("Data is not array");
@@ -29,10 +35,3 @@ export async function getSubscriptions(userId: String): Promise<Subscription[]> 
     }
 }
 
-// Трансформер из JSON в массив Subscription
-function transformJsonToData(jsonData: any): Subscription {
-    const productData = jsonData.product;
-    const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at));
-    const createdAt = new Date(jsonData.created_at);
-    return new Subscription(product, createdAt);
-}
