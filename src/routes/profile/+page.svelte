@@ -9,13 +9,15 @@
 
   async function onClick() {
     isLoading = true;
-    await getGoogleAuth($userStore.id ?? "1034119315")
-      .then((redirect) => {
-        if (redirect != false) {
-          window.Telegram!.WebApp.openUrl(redirect);
-        }
-      })
-      .catch((reason) => console.log(reason));
+    const telegramUid = $userStore.id ?? "1034119315";
+    const url = `https://fitconnect.tech/api/google_int/connect?telegram_uid=${telegramUid}`;
+    
+    try {
+      window.Telegram!.WebApp.openLink(url, { try_instant_view: true });
+    } catch (reason) {
+      console.log(reason);
+    }
+
     isLoading = false;
   }
 </script>
