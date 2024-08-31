@@ -1,5 +1,5 @@
 <h2 class="dark">
-  For now here is nothing.<br />
+  For now is nothing here.<br />
   Wait for next update.
 </h2>
 
