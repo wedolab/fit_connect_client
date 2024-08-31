@@ -29,7 +29,7 @@
         console.log(reason);
         err = reason;
       });
-    await getSubscriptions($userStore.id)
+    await getSubscriptions($userStore.id ?? import.meta.env.VITE_TELEGRAM_ID)
       .then((e) => {
         subscriptionStore.set(e);
         subscriptionIdStore.set(e.map((e) => e.product.id));

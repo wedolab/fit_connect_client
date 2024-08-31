@@ -6,9 +6,30 @@
     font-weight: bold;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Kanit';
+    src: url('/fonts/KanitCyrillic.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    --main-font-cyrillic: 'Kanit', sans-serif;
+    --main-font-latin: 'Nexa', sans-serif;
+  }
+  
+  #app[lang="ru"] {
+    --main-font: var(--main-font-cyrillic);
+  }
+  
+  #app[lang="en"] {
+    --main-font: var(--main-font-latin);
+  }
+  
   
 body {
-    font-family: 'Nexa', sans-serif;
+    font-family: var(--main-font-latin);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,7 +38,6 @@ body {
 }
     
 .my-button {
-    font-family: 'Nexa', sans-serif;
     width: 200px;
     height: 50px;
     background-color: #3d0056;

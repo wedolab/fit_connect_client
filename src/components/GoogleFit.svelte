@@ -10,12 +10,18 @@
   export let hasGoogleAuth: boolean = false;
   export let onComplete: Function;
 
+  let err: any | undefined | null;
   let isLoading = true;
   let googleFitData: any;
 
   onMount(async () => {
     if (hasGoogleAuth) {
-      googleFitData = await getGoogleFit($userStore.id);
+      googleFitData = await getGoogleFit(
+        $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID
+      ).catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
     }
     isLoading = false;
   });
@@ -24,18 +30,30 @@
     isLoginProcessStore.set(
       new ServiceLoginProcess(true, $isLoginProcessStore.isFatSecretProcess)
     );
-    const telegramUid = $userStore.id;
+    const telegramUid = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
 
-    await getGoogleAuth(telegramUid).then((res) => {
-      if (res != false) {
-        window.Telegram!.WebApp.openLink(res, { try_instant_view: true });
-      }
-    });
+    await getGoogleAuth(telegramUid)
+      .then((res) => {
+        if (res != false) {
+          window.Telegram!.WebApp.openLink(res, { try_instant_view: true });
+        }
+      })
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
   }
 </script>
 
 {#if !isLoading}
-  {#if $isLoginProcessStore.isGoogleProcess}
+  {#if err != null || undefined}
+    <div class="spacer" />
+    <div>
+      <h2 class="dark my-error">During data loading, an error occurred:</h2>
+      <h3 class="dark my-error">{err}</h3>
+    </div>
+    <div class="spacer" />
+  {:else if $isLoginProcessStore.isGoogleProcess}
     <h2>After authorization is completed,<br /> click the OK button.</h2>
     <button class="my-button" on:click={onComplete()}>OK</button>
   {:else if !hasGoogleAuth}
@@ -56,5 +74,10 @@
 <style scoped>
   h2 {
     text-align: center;
+  }
+
+  .my-error {
+    text-align: center;
+    color: var(--md-sys-color-error);
   }
 </style>
