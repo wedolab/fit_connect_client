@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "../../app.css";
   import { onMount } from "svelte";
   import BottomNavBar from "../../components/BottomNavBar.svelte";
   import UserInfo from "../../components/UserInfo.svelte";
@@ -54,7 +55,7 @@
         </div>
         <div class="spacer" />
       {:else}
-        <OptionSelector />
+        <OptionSelector rawOptions={HomeOptions} store={homeOptionsStore} />
         {#if $homeOptionsStore === HomeOptions.PRODUCTS}
           <ProductList />
         {:else if $homeOptionsStore === HomeOptions.SUBSCRIPTIONS}

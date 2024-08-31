@@ -18,18 +18,14 @@ export async function getSubscriptions(userId: String): Promise<Subscription[]> 
 
         const data = await response.json();
 
-
-
         const subscriptions = data.map((json: any) => {
             const productData = json.product;
             const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
 
             return new Subscription(product, new Date(json.created_at));
         });
+
         return subscriptions;
-
-
-
     } catch (error) {
         console.log("Something goes wrong: " + error)
         throw error;

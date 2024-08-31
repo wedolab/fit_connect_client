@@ -1,27 +1,41 @@
 <script lang="ts">
-  import { HomeOptions, homeOptionsStore } from "../stores/homeOptionsStore";
+  import type { Writable } from "svelte/store";
 
-  const options = Object.values(HomeOptions);
+  import { onMount } from "svelte";
 
-  const handleClick = (option: HomeOptions) => {
-    homeOptionsStore.set(option);
+  export let rawOptions: any;
+  export let store: Writable<any>;
+
+  let isLoading: boolean = true;
+  let options: Array<any>;
+
+  onMount(() => {
+    options = Object.values(rawOptions);
+    console.log(options);
+    isLoading = false;
+  });
+
+  const handleClick = (option: typeof rawOptions) => {
+    store.set(option);
   };
 </script>
 
 <div class="dark toggle">
-  {#each options as option}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div
-      class="dark option {$homeOptionsStore === option ? 'active' : ''}"
-      on:click={() => handleClick(option)}
-    >
-      {option}
-    </div>
-    {#if option !== options[options.length - 1]}
-      <div class="divider">|</div>
-    {/if}
-  {/each}
+  {#if !isLoading}
+    {#each options as option}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        class="dark option {$store === option ? 'active' : ''}"
+        on:click={() => handleClick(option)}
+      >
+        {option}
+      </div>
+      {#if option !== options[options.length - 1]}
+        <div class="divider">|</div>
+      {/if}
+    {/each}
+  {/if}
 </div>
 
 <style scoped>

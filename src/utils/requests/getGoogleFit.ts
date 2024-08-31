@@ -1,10 +1,9 @@
-import { Product } from "../../models/Product";
+
 import { baseHeader, HttpMethod } from "./baseFetch";
 
-
-export async function getProducts(): Promise<Product[]> {
+export async function getGoogleFit(userId: string): Promise<Array<any>> {
     try {
-        const response = await fetch(import.meta.env.VITE_GET_PRODUCTS_URL, {
+        const response = await fetch(import.meta.env.VITE_GET_GOOGLE_FIT_URL + userId, {
             method: HttpMethod.GET,
             headers: baseHeader,
         });
@@ -16,10 +15,9 @@ export async function getProducts(): Promise<Product[]> {
 
         const data = await response.json();
 
+        const arr = Object.entries(data).map(([key, value]) => ({ key, value }));
 
-        const products = data.map((item: any) => new Product(item.id, item.name, item.is_private, new Date(item.created_at)));
-
-        return products;
+        return arr;
     } catch (error) {
         console.error("Error parsing response:", error);
         throw error;

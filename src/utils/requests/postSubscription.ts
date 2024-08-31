@@ -21,12 +21,10 @@ export async function postSubscription(userId: string, productId: number): Promi
 
         const data = await response.json();
 
-        console.log('Actual data:' + JSON.stringify(data));
         const productData = data.product;
         const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
 
         return new Subscription(product, new Date(data.created_at));
-
     } catch (error) {
         console.error("Error parsing response:", error);
         throw error;

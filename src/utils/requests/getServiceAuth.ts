@@ -1,10 +1,10 @@
-import { Product } from "../../models/Product";
+import { ServiceAuth } from "../../models/ServiceAuth";
 import { baseHeader, HttpMethod } from "./baseFetch";
 
 
-export async function getProducts(): Promise<Product[]> {
+export async function getServiceAuth(userId: string): Promise<ServiceAuth> {
     try {
-        const response = await fetch(import.meta.env.VITE_GET_PRODUCTS_URL, {
+        const response = await fetch(import.meta.env.VITE_API_URL + "/clients/int_service_auth/?telegram_uid=" + userId, {
             method: HttpMethod.GET,
             headers: baseHeader,
         });
@@ -16,10 +16,11 @@ export async function getProducts(): Promise<Product[]> {
 
         const data = await response.json();
 
+        console.log('Auth data: ' + JSON.stringify(data));
 
-        const products = data.map((item: any) => new Product(item.id, item.name, item.is_private, new Date(item.created_at)));
+        const status = new ServiceAuth(data.auth_google, data.auth_fatsecret);
 
-        return products;
+        return status;
     } catch (error) {
         console.error("Error parsing response:", error);
         throw error;
