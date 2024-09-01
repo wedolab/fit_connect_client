@@ -33,13 +33,12 @@
     const telegramUid = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
 
     try {
-      const linkOrFalse = await getGoogleAuth(telegramUid);
-
-      if (linkOrFalse != false) {
-        window.Telegram!.WebApp.openLink(linkOrFalse, {
+      window.Telegram!.WebApp.openLink(
+        import.meta.env.VITE_GOOGLE_AUTH_URL + telegramUid,
+        {
           try_instant_view: true,
-        });
-      }
+        }
+      );
     } catch (error) {
       err = error;
     }
