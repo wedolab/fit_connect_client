@@ -53,9 +53,8 @@
     <h2 class="dark">Hi, {$userStore.first_name} {$userStore.last_name}</h2>
     <h2 class="dark">Something goes wrong with you Login:</h2>
     <h3 class="dark">{err?.toString()}</h3>
-    <button
-      class="dark my-button error-container on-error-container"
-      on:click={retryLogin}>Retry</button
+    <button class="dark my-button error-button" on:click={retryLogin}
+      >Retry</button
     >
   {/if}
 </div>
@@ -69,6 +68,11 @@
     height: 100vh;
     margin: 0 auto;
     text-align: center;
+  }
+
+  .error-button {
+    color: var(--md-sys-color-error-container);
+    background-color: var(--md-sys-color-on-error-container);
   }
 
   h2,
