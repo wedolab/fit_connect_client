@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { userStore } from "../stores/userStore";
-  import { getGoogleAuth } from "../utils/requests/getGoogleAuth";
   import { getGoogleFit } from "../utils/requests/getGoogleFit";
   import CircularProgressIndicator from "./CircularProgressIndicator.svelte";
   import { isLoginProcessStore } from "../stores/isLoginProcess";

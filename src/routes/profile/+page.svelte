@@ -63,7 +63,10 @@
             hasGoogleAuth={serviceStatus.authGoogle}
           />
         {:else if $profileOptionsStore === ProfileOptions.FAT_SECRET}
-          <FatSecret />
+          <FatSecret
+            onComplete={initServiceAuth}
+            hasFSAuth={serviceStatus.authFatSecret}
+          />
         {/if}
         <div class="spacer" />
       {/if}
