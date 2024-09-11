@@ -31,14 +31,22 @@
   });
 
   async function onFSAuth() {
-    // isLoginProcessStore.set(
-    //   new ServiceLoginProcess(true, $isLoginProcessStore.isFatSecretProcess)
-    // );
+    isLoginProcessStore.set(
+      new ServiceLoginProcess($isLoginProcessStore.isGoogleProcess, true)
+    );
     const telegramUid = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
 
     const url = await getFSAuth(telegramUid);
 
-    console.log(url);
+    if (url != null) {
+      window.Telegram!.WebApp.openLink(url, {
+        try_instant_view: true,
+      });
+    } else {
+      isLoginProcessStore.set(
+        new ServiceLoginProcess($isLoginProcessStore.isGoogleProcess, false)
+      );
+    }
   }
 </script>
 
