@@ -1,6 +1,6 @@
 import type { Product } from "./Product";
 
-class Subscription {
+export class Subscription {
     product: Product;
     createdAt: Date;
 
@@ -10,4 +10,3 @@ class Subscription {
     }
 }
 
-export { Subscription }

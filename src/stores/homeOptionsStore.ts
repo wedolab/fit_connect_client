@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
-export enum HomeOptions { 
-    PRODUCTS = "Our Products",
-    SUBSCRIPTIONS = "Subscriptions",
- }
+export enum HomeOptions {
+    REPORTS = "Your Reports",
+    SEND_REPORT = "Send Report",
+}
 
-export const homeOptionsStore = writable<HomeOptions>(HomeOptions.PRODUCTS);
+export const homeOptionsStore = writable<HomeOptions>(HomeOptions.REPORTS);

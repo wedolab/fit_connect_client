@@ -8,6 +8,13 @@
 }
 
 @font-face {
+    font-family: 'inglobal';
+    src: url('/fonts/inglobalb.ttf') format('truetype'); 
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Kanit';
     src: url('/fonts/KanitCyrillic.otf') format('opentype');
     font-weight: bold;
@@ -15,8 +22,8 @@
 }
 
 :root {
-    --main-font-cyrillic: 'Kanit', sans-serif;
-    --main-font-latin: 'Nexa', sans-serif;
+    --main-font-cyrillic: 'inglobal', sans-serif;
+    --main-font-latin: 'inglobal', sans-serif;
   }
   
   #app[lang="ru"] {
@@ -38,6 +45,7 @@ body {
 }
     
 .my-button {
+    font-family: var(--main-font-latin);
     width: 200px;
     height: 50px;
     background-color: #3d0056;

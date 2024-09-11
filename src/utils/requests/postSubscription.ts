@@ -22,7 +22,8 @@ export async function postSubscription(userId: string, productId: number): Promi
         const data = await response.json();
 
         const productData = data.product;
-        const product = new Product(productData.id, productData.name, productData.is_private, new Date(productData.created_at))
+
+        const product = new Product(productData);
 
         return new Subscription(product, new Date(data.created_at));
     } catch (error) {

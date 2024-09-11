@@ -58,13 +58,11 @@
       <h3 class="dark my-error">{err}</h3>
     </div>
     <div class="spacer" />
-  {:else if $isLoginProcessStore.isGoogleProcess}
+  {:else if $isLoginProcessStore.isFatSecretProcess}
     <h2>After authorization is completed,<br /> click the OK button.</h2>
     <button class="my-button" on:click={onComplete()}>OK</button>
   {:else if !hasFSAuth}
-    <button class="my-button" on:click={onFSAuth}
-      >Login with<br />Fat Secret</button
-    >
+    <button class="my-button" on:click={onFSAuth}>Login with Fat Secret</button>
   {:else}
     <h2>
       Calories Data:<br />

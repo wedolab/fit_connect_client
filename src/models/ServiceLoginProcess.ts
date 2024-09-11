@@ -1,4 +1,4 @@
-class ServiceLoginProcess {
+export class ServiceLoginProcess {
     isGoogleProcess: boolean;
     isFatSecretProcess: boolean;
 
@@ -7,5 +7,3 @@ class ServiceLoginProcess {
         this.isGoogleProcess = isGoogleProcess;
     }
 }
-
-export { ServiceLoginProcess }

@@ -4,18 +4,15 @@
   import BottomNavBar from "../../components/BottomNavBar.svelte";
   import UserInfo from "../../components/UserInfo.svelte";
   import OptionSelector from "../../components/OptionSelector.svelte";
-  import ProductList from "../../components/ProductList.svelte";
-  import SubscribeList from "../../components/SubscribeList.svelte";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
   import { getProducts } from "../../utils/requests/getProducts";
-  import { getSubscriptions } from "../../utils/requests/getSubscriptions";
   import { productStore } from "../../stores/productStore";
-  import { userStore } from "../../stores/userStore";
   import { homeOptionsStore, HomeOptions } from "../../stores/homeOptionsStore";
-  import {
-    subscriptionStore,
-    subscriptionIdStore,
-  } from "../../stores/subscriptionStore";
+  import { getReports } from "../../utils/requests/getReports";
+  import { userStore } from "../../stores/userStore";
+  import { reportsStore } from "../../stores/reportsStore";
+  import ReportsList from "../../components/ReportsList.svelte";
+  import SendReport from "../../components/SendReport.svelte";
 
   let isLoading: boolean = true;
   let err: any | undefined | null;
@@ -25,15 +22,6 @@
   async function initHome() {
     await getProducts()
       .then((e) => productStore.set(e))
-      .catch((reason) => {
-        console.log(reason);
-        err = reason;
-      });
-    await getSubscriptions($userStore.id ?? import.meta.env.VITE_TELEGRAM_ID)
-      .then((e) => {
-        subscriptionStore.set(e);
-        subscriptionIdStore.set(e.map((e) => e.product.id));
-      })
       .catch((reason) => {
         console.log(reason);
         err = reason;
@@ -56,10 +44,10 @@
         <div class="spacer" />
       {:else}
         <OptionSelector rawOptions={HomeOptions} store={homeOptionsStore} />
-        {#if $homeOptionsStore === HomeOptions.PRODUCTS}
-          <ProductList />
-        {:else if $homeOptionsStore === HomeOptions.SUBSCRIPTIONS}
-          <SubscribeList />
+        {#if $homeOptionsStore === HomeOptions.REPORTS}
+          <ReportsList />
+        {:else if $homeOptionsStore === HomeOptions.SEND_REPORT}
+          <SendReport />
         {/if}
       {/if}
     {:else}

@@ -1,4 +1,4 @@
-class SubTarget {
+export class SubTarget {
     id: string;
     subtarget: string;
     value: number;
@@ -10,7 +10,7 @@ class SubTarget {
     }
 }
 
-class CustomGoal {
+export class CustomGoal {
     id: string;
     goal: string;
     subTargets: SubTarget[];
@@ -21,5 +21,3 @@ class CustomGoal {
         this.subTargets = subClasses;
     }
 }
-
-export { CustomGoal, SubTarget };

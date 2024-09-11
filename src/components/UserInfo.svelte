@@ -2,6 +2,8 @@
 <script lang="ts">
   import { userStore } from "../stores/userStore";
   let userData = $userStore;
+  import { productStore } from "../stores/productStore";
+  import Pencil from "../icons/pencil.svelte";
 </script>
 
 <div class="dark user-card primary-container">
@@ -11,13 +13,22 @@
     alt="User Avatar"
   />
   <div class="user-details">
+    <!-- Размещаем иконку справа сверху -->
+    <div class="icon">
+      <Pencil />
+    </div>
     <div>{userData.first_name} {userData.last_name}</div>
-    <div>Membership: Member</div>
+    {#if $productStore.length != 0}
+      <div>
+        Product: {$productStore.find((product) => product.isGeneral)?.name}
+      </div>
+    {/if}
   </div>
 </div>
 
-<style>
+<style scoped>
   .user-card {
+    position: relative; /* Добавляем позиционирование, чтобы размещать иконку */
     height: 85px;
     width: 280px;
     display: flex;
@@ -36,5 +47,11 @@
     border-radius: 12px;
     margin-right: 24px;
     margin-left: 16px;
+  }
+
+  .icon {
+    position: absolute; /* Позиционируем иконку абсолютно */
+    top: 16px; /* Отступ сверху */
+    right: 16px; /* Отступ справа */
   }
 </style>

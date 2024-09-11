@@ -1,4 +1,4 @@
-class ServiceAuth {
+export class ServiceAuth {
     authGoogle: boolean;
     authFatSecret: boolean;
 
@@ -8,4 +8,3 @@ class ServiceAuth {
     }
 }
 
-export { ServiceAuth }
