@@ -6,6 +6,7 @@
   import { isLoginProcessStore } from "../stores/isLoginProcess";
   import { ServiceLoginProcess } from "../models/ServiceLoginProcess";
   import { convertDate } from "../utils/convertDate";
+  import { getFSAuth } from "../utils/requests/getFSAuth";
 
   export let hasFSAuth: boolean = false;
   export let onComplete: Function;
@@ -30,23 +31,14 @@
   });
 
   async function onFSAuth() {
-    isLoginProcessStore.set(
-      new ServiceLoginProcess(true, $isLoginProcessStore.isFatSecretProcess)
-    );
+    // isLoginProcessStore.set(
+    //   new ServiceLoginProcess(true, $isLoginProcessStore.isFatSecretProcess)
+    // );
     const telegramUid = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
 
-    try {
-      window.Telegram!.WebApp.openLink(
-        import.meta.env.VITE_API_URL +
-          "/fatsecret_int/fs_get_auth_url/?telegram_id=" +
-          telegramUid,
-        {
-          try_instant_view: true,
-        }
-      );
-    } catch (error) {
-      err = error;
-    }
+    const url = await getFSAuth(telegramUid);
+
+    console.log(url);
   }
 </script>
 
