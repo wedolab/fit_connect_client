@@ -13,20 +13,24 @@
 
   let err: any | undefined | null;
   let isLoading = true;
-  let googleFitData: any;
+  let fatSecret: any;
 
   onMount(async () => {
     if (hasFSAuth) {
       const now = new Date();
 
-      googleFitData = await getFatSecret(
+      const data = await getFatSecret(
         convertDate(now),
         $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID
       ).catch((reason) => {
         console.log(reason);
         err = reason;
       });
+
+      fatSecret = data;
     }
+
+    console.log(fatSecret);
     isLoading = false;
   });
 
@@ -63,14 +67,23 @@
     <button class="my-button" on:click={onComplete()}>OK</button>
   {:else if !hasFSAuth}
     <button class="my-button" on:click={onFSAuth}>Login with Fat Secret</button>
-  {:else}
+  {:else if fatSecret != null || undefined}
     <h2>
-      Calories Data:<br />
-      {#each googleFitData as data}
-        <br />
-        {data.key.charAt(0).toUpperCase() + data.key.slice(1)}: {data.value}
-      {/each}
+      Питание:<br />
+      <div>
+        Ккал: {fatSecret.calories} / Белки: {fatSecret.protein}
+      </div>
+      <div>
+        Жиры: {fatSecret.fat} / Углеводы: {fatSecret.carbohydrate}
+      </div>
     </h2>
+  {:else}
+    <div>
+      <h2 class="dark my-error">За сегодняшний день<br />данные не найдены</h2>
+      <h3 class="dark my-error">
+        Попробуй добавить отчет<br /> и вернись через часок
+      </h3>
+    </div>
   {/if}
 {:else}
   <CircularProgressIndicator />

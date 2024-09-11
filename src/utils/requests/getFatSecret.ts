@@ -1,7 +1,7 @@
 
 import { baseHeader, HttpMethod } from "./baseFetch";
 
-export async function getFatSecret(dateBy: String, userId: String): Promise<Array<any>> {
+export async function getFatSecret(dateBy: String, userId: String): Promise<any> {
     try {
         const response = await fetch(import.meta.env.VITE_API_URL
             + "/fatsecret_int/fs_get_dairy_month/?dairy_date="
@@ -19,7 +19,18 @@ export async function getFatSecret(dateBy: String, userId: String): Promise<Arra
 
         const data = await response.json();
 
-        const arr = Object.entries(data).map(([key, value]) => ({ key, value }));
+
+
+        const today = new Date();
+        const startDate = new Date(1970, 0, 1);
+
+        const arr = data.response.month.day.find((item: { date_int: number; }) => {
+            let endDate = new Date(startDate);
+            endDate.setDate(item.date_int);
+
+            return today.getTime() === endDate.getTime();
+        });
+
 
         return arr;
     } catch (error) {
