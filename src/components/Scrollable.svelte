@@ -8,7 +8,7 @@
     flex: 1;
     flex-direction: column;
     align-items: center;
-    max-height: 65vh;
+    max-height: 60vh;
     width: 80vw;
     overflow-y: auto;
     scrollbar-width: thin; /* Установите толщину скроллбара */
