@@ -26,6 +26,12 @@
         console.log(reason);
         err = reason;
       });
+    await getReports($userStore.id ?? import.meta.env.VITE_TELEGRAM_ID)
+      .then((e) => reportsStore.set(e))
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
 
     isLoading = false;
   }

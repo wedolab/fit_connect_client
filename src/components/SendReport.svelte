@@ -3,6 +3,7 @@
   import { postReports, ReportType } from "../utils/requests/postReport";
   import { userStore } from "../stores/userStore";
   import CircularProgressIndicator from "./CircularProgressIndicator.svelte";
+  import Scrollable from "./Scrollable.svelte";
 
   let weight = 0;
   let steps = 0;
@@ -39,39 +40,39 @@
   }
 </script>
 
-<div>
-  {#if isLoading}
-    <div class="loading-indicator">
-      <CircularProgressIndicator />
-    </div>
-  {:else}
-    <label for="weight">Вес:</label>
-    <input type="number" id="weight" bind:value={weight} />
+<Scrollable>
+  <div>
+    {#if isLoading}
+      <div class="loading-indicator">
+        <CircularProgressIndicator />
+      </div>
+    {:else}
+      <label for="weight">Вес:</label>
+      <input type="number" id="weight" bind:value={weight} />
 
-    <label for="steps">Шаги:</label>
-    <input type="number" id="steps" bind:value={steps} />
-    <label for="ccal">Ккал:</label>
-    <input type="number" id="ccal" bind:value={formData.ccal} />
+      <label for="steps">Шаги:</label>
+      <input type="number" id="steps" bind:value={steps} />
+      <label for="ccal">Ккал:</label>
+      <input type="number" id="ccal" bind:value={formData.ccal} />
 
-    <label for="protein">Белки:</label>
-    <input type="number" id="protein" bind:value={formData.protein} />
+      <label for="protein">Белки:</label>
+      <input type="number" id="protein" bind:value={formData.protein} />
 
-    <label for="fat">Жиры:</label>
-    <input type="number" id="fat" bind:value={formData.fat} />
+      <label for="fat">Жиры:</label>
+      <input type="number" id="fat" bind:value={formData.fat} />
 
-    <label for="c">Углеводы:</label>
-    <input type="number" id="c" bind:value={formData.c} />
+      <label for="c">Углеводы:</label>
+      <input type="number" id="c" bind:value={formData.c} />
 
-    <button class="my-button" on:click={submitData}>Send Report</button>
-  {/if}
-</div>
+      <button class="my-button" on:click={submitData}>Send Report</button>
+    {/if}
+  </div>
+</Scrollable>
 
 <style scoped>
   div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 
   .loading-indicator {
