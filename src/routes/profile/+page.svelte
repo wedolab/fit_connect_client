@@ -80,7 +80,10 @@
       </div>
       <div class="spacer" />
       <div>
-        <button class="my-button" on:click={() => goto("/home")}>Назад</button>
+        <button
+          class="my-button my-bottom-button"
+          on:click={() => goto("/home")}>Назад</button
+        >
         <button class="my-button my-bottom-button" on:click={initServiceAuth}
           >OK</button
         >
