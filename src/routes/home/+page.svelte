@@ -2,7 +2,9 @@
   import "../../app.css";
   import { onMount } from "svelte";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
+  import { getReports } from "../../utils/requests/getReports";
   import { userStore } from "../../stores/userStore";
+  import { reportsStore } from "../../stores/reportsStore";
   import { goto } from "$app/navigation";
   import ErrorRetry from "../../components/ErrorRetry.svelte";
 
@@ -13,6 +15,12 @@
   onMount(async () => initHome());
 
   async function initHome() {
+    await getReports($userStore.id ?? import.meta.env.VITE_TELEGRAM_ID)
+      .then((e) => reportsStore.set(e))
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
     userName = $userStore.first_name ?? $userStore.username ?? $userStore.id;
 
     isLoading = false;

@@ -62,9 +62,7 @@
         <br />Make sure this script is running within
         <br />a Telegram Mini App.
       </h2>
-    {:else if isLoading}
-      <NeonText text="LAB" />
-    {:else}
+    {:else if err != undefined || null}
       <h2 class="dark">
         Привет, {$userStore.first_name}
         {$userStore.last_name}
@@ -74,6 +72,8 @@
       <button class="dark my-button error-button" on:click={retryLogin}
         >Retry</button
       >
+    {:else}
+      <NeonText text="LAB" />
     {/if}
   </div>
 </div>
