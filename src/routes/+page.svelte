@@ -26,7 +26,7 @@
 
   async function startLoading() {
     const loginPromise = getBaseQuest($userStore.id);
-    const timerPromise = new Promise((resolve) => setTimeout(resolve, 5000));
+    const timerPromise = new Promise((resolve) => setTimeout(resolve, 3800));
 
     await Promise.all([loginPromise, timerPromise])
       .then(([hasQuest, _]) => {
@@ -34,7 +34,7 @@
           goto("/home");
           isLoading = false;
         } else {
-          goto("/home");
+          goto("/quest");
           isLoading = false;
         }
       })
@@ -49,7 +49,22 @@
   async function retryLogin() {
     err = null;
     isLoading = true;
-    await startLoading();
+    await getBaseQuest($userStore.id)
+      .then((hasQuest) => {
+        if (hasQuest) {
+          goto("/home");
+          isLoading = false;
+        } else {
+          goto("/quest");
+          isLoading = false;
+        }
+      })
+      .catch((reason) => {
+        if (reason != null || undefined) {
+          console.log(reason);
+          err = reason;
+        }
+      });
   }
 </script>
 
