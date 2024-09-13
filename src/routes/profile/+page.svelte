@@ -10,6 +10,7 @@
   import ServiceConnect from "../../components/ServiceConnect.svelte";
   import ErrorRetry from "../../components/ErrorRetry.svelte";
   import NeonText from "../../components/NeonText.svelte";
+  import { goto } from "$app/navigation";
 
   let isLoading: boolean = true;
   let serviceStatus: ServiceAuth;
@@ -79,8 +80,10 @@
       </div>
       <div class="spacer" />
       <div>
-        <button class="my-button">Назад</button>
-        <button class="my-button" on:click={initServiceAuth}>OK</button>
+        <button class="my-button" on:click={() => goto("/home")}>Назад</button>
+        <button class="my-button my-bottom-button" on:click={initServiceAuth}
+          >OK</button
+        >
       </div>
     {/if}
   {:else}
@@ -98,6 +101,13 @@
     align-items: center;
     height: 90vh;
     margin-top: 20px; /* Отступ сверху 20px */
+  }
+
+  .my-bottom-button {
+    width: 120px;
+    height: 40px;
+    color: #d993f5;
+    font-size: 12px;
   }
 
   .flex-display {

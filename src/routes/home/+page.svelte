@@ -29,6 +29,8 @@
 
 <div class="container">
   {#if !isLoading}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <h1 on:click={() => goto("/profile")}>{userName}</h1>
     {#if err != null || undefined}
       <div class="center">
@@ -56,7 +58,7 @@
     align-items: center;
     margin-top: 20px;
     position: relative;
-    height: 95vh;
+    height: 90vh;
   }
 
   h1:hover {
