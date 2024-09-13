@@ -4,6 +4,8 @@
   import CircularProgressIndicator from "../components/CircularProgressIndicator.svelte";
   import { userStore } from "../stores/userStore";
   import NeonText from "../components/NeonText.svelte";
+  import { getBaseQuest } from "../utils/requests/getBaseQuest";
+  import { goto } from "$app/navigation";
 
   let isTelegramWebApp: boolean | undefined = false;
   let webAppData: any = null;
@@ -22,17 +24,24 @@
     }
   });
 
-  async function login() {
-    // Simulate login process
-    return new Promise((resolve) => setTimeout(resolve, 2000));
-  }
-
   async function startLoading() {
-    const loginPromise = login();
+    const loginPromise = getBaseQuest($userStore.id);
     const timerPromise = new Promise((resolve) => setTimeout(resolve, 5000));
 
-    await Promise.all([loginPromise, timerPromise]);
-    isLoading = false;
+    await Promise.all([loginPromise, timerPromise])
+      .then(([hasQuest, _]) => {
+        if (hasQuest) {
+          goto("/home");
+          isLoading = false;
+        } else {
+          goto("/home");
+          isLoading = false;
+        }
+      })
+      .catch((reason) => {
+        console.log(reason);
+        err = reason;
+      });
   }
 
   async function retryLogin() {
