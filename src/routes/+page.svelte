@@ -25,10 +25,7 @@
   });
 
   async function startLoading() {
-    const loginPromise = getBaseQuest($userStore.id).catch((reason) => {
-      console.log(reason);
-      err = reason;
-    });
+    const loginPromise = getBaseQuest($userStore.id);
     const timerPromise = new Promise((resolve) => setTimeout(resolve, 5000));
 
     await Promise.all([loginPromise, timerPromise]).then(([hasQuest, _]) => {
