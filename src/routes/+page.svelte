@@ -63,11 +63,7 @@
         <br />a Telegram Mini App.
       </h2>
     {:else if isLoading}
-      <NeonText
-        text="L 
-      A 
-      B"
-      />
+      <NeonText text="LAB" />
     {:else}
       <h2 class="dark">
         Привет, {$userStore.first_name}
