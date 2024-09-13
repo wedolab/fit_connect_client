@@ -1,32 +1,16 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import "../../app.css";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
-
   import Quest from "../../components/Quest.svelte";
-  import { userStore } from "../../stores/userStore";
-  import { postUserQuest } from "../../utils/requests/postUserQuest";
 
   let isLoading = false;
-
-  async function onSendQuest(params: any) {
-    isLoading = true;
-    const userId = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
-    try {
-      await postUserQuest(userId, params).then(() => {
-        goto("/home");
-      });
-    } catch (e) {
-      throw e;
-    }
-  }
 </script>
 
 <div class="container">
   {#if !isLoading}
     <h2>Анкета</h2>
     <div class="center">
-      <Quest onClick={onSendQuest} />
+      <Quest navigate={"/home"} />
     </div>
   {:else}
     <div class="center">

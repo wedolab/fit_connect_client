@@ -5,6 +5,8 @@
   import { Answer, Question } from "../models/Quest";
   import { convertDate } from "../utils/convertDate";
   import ErrorRetry from "./ErrorRetry.svelte";
+  import { goto } from "$app/navigation";
+  import { postUserQuest } from "../utils/requests/postUserQuest";
 
   // Данные о вопросах и предзаполненные данные анкеты
   let questionsData = <any>[
@@ -23,8 +25,7 @@
   let userAnswers = <any>[]; // Предзаполненные ответы пользователя
   let isLoading = true;
   let err: any | undefined | null;
-  export let onClick: Function;
-  let showButton: boolean;
+  export let navigate: string;
 
   onMount(async () => {
     const user = $userStore;
@@ -46,15 +47,21 @@
   });
 
   // Функция для отправки данных анкеты
-  function submitQuestionnaire() {
-    console.log(JSON.stringify({ qa_data: { qa: userAnswers } }));
-    onClick(JSON.stringify({ qa_data: { qa: userAnswers } })).catch(
-      (reason: any) => {
+  async function submitQuestionnaire() {
+    isLoading = true;
+    const userId = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
+    const data = JSON.stringify({ qa_data: { qa: userAnswers } });
+
+    await postUserQuest(userId, data)
+      .then(() => {
+        goto(navigate);
+        isLoading = false;
+      })
+      .catch((reason: any) => {
         console.log(reason);
         err = reason;
         isLoading = false;
-      }
-    );
+      });
   }
 </script>
 

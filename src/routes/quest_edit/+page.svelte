@@ -4,31 +4,16 @@
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
 
   import Quest from "../../components/Quest.svelte";
-  import { userStore } from "../../stores/userStore";
-  import { postUserQuest } from "../../utils/requests/postUserQuest";
 
   let isLoading = false;
-
-  async function onSendQuest(params: any) {
-    isLoading = true;
-    const userId = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
-    try {
-      await postUserQuest(userId, params).then(() => {
-        goto("/profile");
-      });
-    } catch (e) {
-      throw e;
-    }
-  }
 </script>
 
 <div class="container">
   {#if !isLoading}
     <h2>Анкета</h2>
     <div class="center">
-      <Quest onClick={onSendQuest} />
+      <Quest navigate={"/profile"} />
     </div>
-    <div class="spacer" />
 
     <button class="my-button my-bottom-button" on:click={() => goto("/profile")}
       >Назад</button
@@ -58,8 +43,5 @@
 
   h2 {
     text-align: center;
-  }
-  .spacer {
-    height: 20vh;
   }
 </style>
