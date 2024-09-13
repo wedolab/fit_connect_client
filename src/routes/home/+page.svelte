@@ -28,10 +28,8 @@
 </script>
 
 <div class="container">
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <h1 on:click={() => goto("/profile")}>{userName}</h1>
   {#if !isLoading}
+    <h1 on:click={() => goto("/profile")}>{userName}</h1>
     {#if err != null || undefined}
       <div class="center">
         <ErrorRetry {err} onRetry={() => {}} errTitle={null} />
