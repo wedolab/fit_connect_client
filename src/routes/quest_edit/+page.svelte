@@ -4,6 +4,7 @@
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
 
   import Quest from "../../components/Quest.svelte";
+  import Scrollable from "../../components/Scrollable.svelte";
 
   let isLoading = false;
 </script>
@@ -12,9 +13,11 @@
   {#if !isLoading}
     <h2>Анкета</h2>
     <div class="center">
-      <Quest navigate={"/profile"} />
+      <Scrollable>
+        <Quest navigate={"/profile"} />
+      </Scrollable>
     </div>
-
+    <div class="spacer" />
     <button class="my-button my-bottom-button" on:click={() => goto("/profile")}
       >Назад</button
     >
