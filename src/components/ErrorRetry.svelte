@@ -4,7 +4,7 @@
   export let onRetry: Function;
 </script>
 
-<div>
+<div class="container">
   <h2 class="dark my-error">
     {errTitle == null || undefined
       ? "Во время загрузки данных произошла ошибка:"
@@ -15,8 +15,18 @@
 </div>
 
 <style scoped>
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .error-button {
     color: var(--md-sys-color-error-container);
     background-color: var(--md-sys-color-on-error-container);
+  }
+
+  .my-error {
+    color: var(--md-sys-color-error);
+    text-align: center;
   }
 </style>
