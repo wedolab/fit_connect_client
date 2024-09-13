@@ -47,7 +47,10 @@
     {:else}
       <div class="center">
         <div class="flex-display">
-          <button class="my-button">Анкета</button>
+          <button class="my-button" on:click={() => goto("/quest_edit")}
+            >Анкета</button
+          >
+          <div class="space" />
           <ServiceConnect
             serviceName={"Google"}
             hasServiceAuth={serviceStatus.authGoogle.status}
@@ -62,6 +65,7 @@
               )}
             url={serviceStatus.authGoogle.url}
           />
+          <div class="space" />
           <ServiceConnect
             serviceName={"Fat Secret"}
             hasServiceAuth={serviceStatus.authFatSecret.status}
@@ -118,5 +122,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .space {
+    height: 20px;
   }
 </style>

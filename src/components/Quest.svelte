@@ -24,6 +24,7 @@
   let isLoading = true;
   let err: any | undefined | null;
   export let onClick: Function;
+  let showButton: boolean;
 
   onMount(async () => {
     const user = $userStore;
@@ -47,7 +48,13 @@
   // Функция для отправки данных анкеты
   function submitQuestionnaire() {
     console.log(JSON.stringify({ qa_data: { qa: userAnswers } }));
-    onClick(JSON.stringify({ qa_data: { qa: userAnswers } }));
+    onClick(JSON.stringify({ qa_data: { qa: userAnswers } })).catch(
+      (reason: any) => {
+        console.log(reason);
+        err = reason;
+        isLoading = false;
+      }
+    );
   }
 </script>
 
@@ -57,7 +64,7 @@
       <CircularProgressIndicator />
     </div>
   {:else if err != null || undefined}
-    <ErrorRetry {err} onRetry={() => {}} errTitle={null} />
+    <ErrorRetry {err} onRetry={submitQuestionnaire} errTitle={null} />
   {:else}
     <div class="container">
       {#each questionsData as question, i}
@@ -100,6 +107,7 @@
           </div>
         {/if}
       {/each}
+
       <button class="my-button" on:click={submitQuestionnaire}>Отправить</button
       >
     </div>

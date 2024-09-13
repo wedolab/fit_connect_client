@@ -1,54 +1,50 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import "../../app.css";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
-  import ErrorRetry from "../../components/ErrorRetry.svelte";
+
   import Quest from "../../components/Quest.svelte";
+  import { userStore } from "../../stores/userStore";
+  import { postUserQuest } from "../../utils/requests/postUserQuest";
 
   let isLoading = false;
 
-  let err: any | undefined | null;
-
   async function onSendQuest(params: any) {
     isLoading = true;
-
-    isLoading = false;
+    const userId = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
+    try {
+      await postUserQuest(userId, params).then(() => {
+        goto("/home");
+      });
+    } catch (e) {
+      throw e;
+    }
   }
 </script>
 
-<div>
+<div class="container">
   {#if !isLoading}
-    {#if err != null || undefined}
-      <div class="spacer" />
-      <ErrorRetry {err} onRetry={() => {}} errTitle={null} />
-      <div class="spacer" />
-    {:else}
-      <div class="spacer" />
-      <h2>Анкета</h2>
-      <div class="space" />
+    <h2>Анкета</h2>
+    <div class="center">
       <Quest onClick={onSendQuest} />
-      <div class="spacer" />
-    {/if}
+    </div>
   {:else}
-    <div class="loading-indicator">
+    <div class="center">
       <CircularProgressIndicator />
     </div>
   {/if}
 </div>
 
 <style scoped>
-  .loading-indicator {
+  .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start; /* Прижимаем к верху */
     align-items: center;
-    height: 60vh; /* Высота индикатора загрузки */
+    height: 90vh;
+    margin-top: 20px; /* Отступ сверху 20px */
   }
   h2 {
     text-align: center;
-  }
-  .spacer {
-    height: 20vh;
-  }
-  .space {
-    height: 40px;
   }
 </style>
