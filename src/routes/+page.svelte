@@ -52,23 +52,28 @@
 </script>
 
 <div class="container">
-  {#if userInfo == null || undefined}
-    <h2 class="dark">Hi, {$userStore.first_name} {$userStore.last_name}</h2>
-    <h2 class="dark">
-      Telegram.WebApp not found.
-      <br />Make sure this script is running within
-      <br />a Telegram Mini App.
-    </h2>
-  {:else if isLoading}
-    <NeonText text="<LAB />" />
-  {:else}
-    <h2 class="dark">Привет, {$userStore.first_name} {$userStore.last_name}</h2>
-    <h2 class="dark">Пока ты пытался войти, что-то пошло не так:</h2>
-    <h3 class="dark">{err?.toString()}</h3>
-    <button class="dark my-button error-button" on:click={retryLogin}
-      >Retry</button
-    >
-  {/if}
+  <div class="center">
+    {#if userInfo == null || undefined}
+      <h2 class="dark">Hi, {$userStore.first_name} {$userStore.last_name}</h2>
+      <h2 class="dark">
+        Telegram.WebApp not found.
+        <br />Make sure this script is running within
+        <br />a Telegram Mini App.
+      </h2>
+    {:else if isLoading}
+      <NeonText text="<LAB />" />
+    {:else}
+      <h2 class="dark">
+        Привет, {$userStore.first_name}
+        {$userStore.last_name}
+      </h2>
+      <h2 class="dark">Пока ты пытался войти, что-то пошло не так:</h2>
+      <h3 class="dark">{err?.toString()}</h3>
+      <button class="dark my-button error-button" on:click={retryLogin}
+        >Retry</button
+      >
+    {/if}
+  </div>
 </div>
 
 <style scope>
@@ -77,7 +82,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     margin: 0 auto;
     text-align: center;
   }
