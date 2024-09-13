@@ -1,15 +1,16 @@
-import { Product } from "../../models/Product";
 import { baseHeader, HttpMethod } from "./baseFetch";
 
-
-export async function getProducts(): Promise<Product[]> {
+export async function postUserQuest(userId: string, postInfo: any): Promise<any> {
     try {
         const response = await fetch(
             import.meta.env.VITE_API_URL
-            + '/products/product/', {
-            method: HttpMethod.GET,
-            headers: baseHeader,
-        });
+            + '/clients/create_general_questionnaire/?telegram_uid='
+            + userId,
+            {
+                method: HttpMethod.POST,
+                headers: baseHeader,
+                body: postInfo,
+            });
         if (!response.ok) {
             const error = response.statusText;
             const statusCode = response.status;
@@ -18,9 +19,7 @@ export async function getProducts(): Promise<Product[]> {
 
         const data = await response.json();
 
-        const products = data.map((item: any) => new Product(item));
-
-        return products;
+        return data;
     } catch (error) {
         console.error("Error parsing response:", error);
         throw error;

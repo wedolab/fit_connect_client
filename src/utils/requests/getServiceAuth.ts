@@ -1,13 +1,16 @@
-import { ServiceAuth } from "../../models/ServiceAuth";
+import { convertToServiceStatus, ServiceAuth } from "../../models/ServiceAuth";
 import { baseHeader, HttpMethod } from "./baseFetch";
 
 
 export async function getServiceAuth(userId: string): Promise<ServiceAuth> {
     try {
-        const response = await fetch(import.meta.env.VITE_API_URL + "/clients/int_service_auth/?telegram_uid=" + userId, {
-            method: HttpMethod.GET,
-            headers: baseHeader,
-        });
+        const response = await fetch(import.meta.env.VITE_API_URL
+            + "/clients/get_int_service_auth/?telegram_uid="
+            + userId,
+            {
+                method: HttpMethod.GET,
+                headers: baseHeader,
+            });
         if (!response.ok) {
             const error = response.statusText;
             const statusCode = response.status;
@@ -16,9 +19,11 @@ export async function getServiceAuth(userId: string): Promise<ServiceAuth> {
 
         const data = await response.json();
 
-        console.log('Auth data: ' + JSON.stringify(data));
+        const authGoogle = convertToServiceStatus(data.google_int_auth_status);
+        const authFatSecret = convertToServiceStatus(data.fatsecret_int_auth_status);
 
-        const status = new ServiceAuth(data.auth_google, data.auth_fatsecret);
+
+        const status = new ServiceAuth(authGoogle, authFatSecret);
 
         return status;
     } catch (error) {

@@ -21,6 +21,16 @@
     font-style: normal;
 }
 
+input[type="text"],
+input[type="date"], 
+input[type="number"] {
+  height: 32px;
+  width: min(80vw, 200px);
+  border-radius: 6px;
+  padding: 0 8px;
+  font-family: var(--main-font-cyrillic);
+}
+
 :root {
     --main-font-cyrillic: 'inglobal', sans-serif;
     --main-font-latin: 'inglobal', sans-serif;
@@ -33,6 +43,7 @@
   #app[lang="en"] {
     --main-font: var(--main-font-latin);
   }
+  
   
   
 body {
@@ -63,6 +74,16 @@ body {
 .my-button:hover {
     background-color: #4f0a6c;
 }
+
+.center {
+    position: absolute; /* Позиционируем абсолютно */
+    top: 50%; /* Размещаем по центру по вертикали */
+    left: 50%; /* Располагаем в центре по горизонтали */
+    transform: translate(
+      -50%,
+      -50%
+    ); /* Центрируем как по вертикали, так и по горизонтали */
+  }
 
 .page-container {
     display: flex;

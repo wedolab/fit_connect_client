@@ -5,6 +5,7 @@
   import { getReports } from "../utils/requests/getReports";
   import CircularProgressIndicator from "./CircularProgressIndicator.svelte";
   import { userStore } from "../stores/userStore";
+  import ErrorRetry from "./ErrorRetry.svelte";
 
   let isLoading: boolean = true;
   let err: any | undefined | null;
@@ -46,14 +47,13 @@
     {#if err != null || undefined}
       <div class="spacer" />
       <div>
-        <h2 class="dark my-error">During data loading, an error occurred:</h2>
-        <h3 class="dark my-error">{err}</h3>
+        <ErrorRetry {err} onRetry={() => {}} errTitle={null} />
       </div>
       <div class="spacer" />
     {:else}
       {#each groupedData as group, index}
         <div class="group">
-          <p class="report-header">Report {index + 1}:</p>
+          <p class="report-header">Отчет {index + 1}:</p>
           {#each group as item}
             <div>
               {#if item.steps >= 0}

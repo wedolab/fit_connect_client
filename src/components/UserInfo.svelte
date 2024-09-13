@@ -2,8 +2,12 @@
 <script lang="ts">
   import { userStore } from "../stores/userStore";
   let userData = $userStore;
-  import { productStore } from "../stores/productStore";
   import Pencil from "../icons/pencil.svelte";
+  import { goto } from "$app/navigation";
+
+  function goToQuest(): void {
+    goto("/quest_edit");
+  }
 </script>
 
 <div class="dark user-card primary-container">
@@ -14,15 +18,10 @@
   />
   <div class="user-details">
     <!-- Размещаем иконку справа сверху -->
-    <div class="icon">
+    <button on:click={goToQuest} class="dark icon">
       <Pencil />
-    </div>
-    <div>{userData.first_name} {userData.last_name}</div>
-    {#if $productStore.length != 0}
-      <div>
-        Product: {$productStore.find((product) => product.isGeneral)?.name}
-      </div>
-    {/if}
+    </button>
+    <div class="dark">{userData.first_name} {userData.last_name}</div>
   </div>
 </div>
 
@@ -53,5 +52,14 @@
     position: absolute; /* Позиционируем иконку абсолютно */
     top: 16px; /* Отступ сверху */
     right: 16px; /* Отступ справа */
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--md-sys-color-primary);
+    cursor: pointer;
+  }
+
+  .icon:focus {
+    outline: none; /* Убираем фокусовую обводку */
   }
 </style>

@@ -1,10 +1,9 @@
 <script lang="ts">
   import "../app.css";
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
   import CircularProgressIndicator from "../components/CircularProgressIndicator.svelte";
-  import { postAuthData } from "../utils/requests/postAuthData";
   import { userStore } from "../stores/userStore";
+  import NeonText from "../components/NeonText.svelte";
 
   let isTelegramWebApp: boolean | undefined = false;
   let webAppData: any = null;
@@ -19,23 +18,27 @@
 
     if (userInfo != undefined) {
       userStore.set(userInfo);
-      await login();
+      await startLoading();
     }
   });
 
   async function login() {
-    await postAuthData(webAppData)
-      .then(() => goto("/home"))
-      .catch((error) => {
-        err = error;
-        isLoading = false;
-      });
+    // Simulate login process
+    return new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
+  async function startLoading() {
+    const loginPromise = login();
+    const timerPromise = new Promise((resolve) => setTimeout(resolve, 5000));
+
+    await Promise.all([loginPromise, timerPromise]);
+    isLoading = false;
   }
 
   async function retryLogin() {
     err = null;
     isLoading = true;
-    await login();
+    await startLoading();
   }
 </script>
 
@@ -48,10 +51,10 @@
       <br />a Telegram Mini App.
     </h2>
   {:else if isLoading}
-    <CircularProgressIndicator />
+    <NeonText text="<LAB />" />
   {:else}
-    <h2 class="dark">Hi, {$userStore.first_name} {$userStore.last_name}</h2>
-    <h2 class="dark">Something goes wrong with you Login:</h2>
+    <h2 class="dark">Привет, {$userStore.first_name} {$userStore.last_name}</h2>
+    <h2 class="dark">Пока ты пытался войти, что-то пошло не так:</h2>
     <h3 class="dark">{err?.toString()}</h3>
     <button class="dark my-button error-button" on:click={retryLogin}
       >Retry</button

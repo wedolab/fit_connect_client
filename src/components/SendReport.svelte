@@ -48,23 +48,53 @@
       </div>
     {:else}
       <label for="weight">Вес:</label>
-      <input type="number" id="weight" bind:value={weight} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="weight"
+        bind:value={weight}
+      />
 
       <label for="steps">Шаги:</label>
-      <input type="number" id="steps" bind:value={steps} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="steps"
+        bind:value={steps}
+      />
       <label for="ccal">Ккал:</label>
-      <input type="number" id="ccal" bind:value={formData.ccal} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="ccal"
+        bind:value={formData.ccal}
+      />
 
       <label for="protein">Белки:</label>
-      <input type="number" id="protein" bind:value={formData.protein} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="protein"
+        bind:value={formData.protein}
+      />
 
       <label for="fat">Жиры:</label>
-      <input type="number" id="fat" bind:value={formData.fat} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="fat"
+        bind:value={formData.fat}
+      />
 
       <label for="c">Углеводы:</label>
-      <input type="number" id="c" bind:value={formData.c} />
+      <input
+        class="dark secondary-container on-secondary-container"
+        type="number"
+        id="c"
+        bind:value={formData.c}
+      />
 
-      <button class="my-button" on:click={submitData}>Send Report</button>
+      <button class="my-button" on:click={submitData}>Отправить</button>
     {/if}
   </div>
 </Scrollable>

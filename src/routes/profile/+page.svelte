@@ -3,18 +3,13 @@
   import { onMount } from "svelte";
   import { getServiceAuth } from "../../utils/requests/getServiceAuth";
   import { userStore } from "../../stores/userStore";
-  import BottomNavBar from "../../components/BottomNavBar.svelte";
-  import GoogleFit from "../../components/GoogleFit.svelte";
   import CircularProgressIndicator from "../../components/CircularProgressIndicator.svelte";
   import { ServiceAuth } from "../../models/ServiceAuth";
-  import OptionSelector from "../../components/OptionSelector.svelte";
-  import {
-    profileOptionsStore,
-    ProfileOptions,
-  } from "../../stores/profileOptionsStore";
   import { isLoginProcessStore } from "../../stores/isLoginProcess";
   import { ServiceLoginProcess } from "../../models/ServiceLoginProcess";
-  import FatSecret from "../../components/FatSecret.svelte";
+  import ServiceConnect from "../../components/ServiceConnect.svelte";
+  import ErrorRetry from "../../components/ErrorRetry.svelte";
+  import NeonText from "../../components/NeonText.svelte";
 
   let isLoading: boolean = true;
   let serviceStatus: ServiceAuth;
@@ -26,57 +21,74 @@
 
   async function initServiceAuth() {
     isLoading = true;
-    await getServiceAuth($userStore.id ?? import.meta.env.VITE_TELEGRAM_ID)
-      .then((status) => {
-        serviceStatus = status;
-      })
+    const userId = $userStore.id ?? import.meta.env.VITE_TELEGRAM_ID;
+
+    await getServiceAuth(userId)
+      .then((data) => (serviceStatus = data))
       .catch((reason) => {
         console.log(reason);
         err = reason;
       });
+
     isLoading = false;
     isLoginProcessStore.set(new ServiceLoginProcess(false, false));
   }
 </script>
 
-<BottomNavBar activeIndex={1}>
-  <div class="container" lang="en">
-    <h1>Profile</h1>
+<div class="container" lang="en">
+  <h1>Профиль</h1>
 
-    {#if !isLoading}
-      {#if err != null || undefined}
-        <div class="spacer" />
-        <div>
-          <h2 class="dark my-error">During data loading, an error occurred:</h2>
-          <h3 class="dark my-error">{err}</h3>
-        </div>
-        <div class="spacer" />
-      {:else}
-        <OptionSelector
-          store={profileOptionsStore}
-          rawOptions={ProfileOptions}
-        />
-        <div class="spacer" />
-        {#if $profileOptionsStore === ProfileOptions.GOOGLE_FIT}
-          <GoogleFit
-            onComplete={initServiceAuth}
-            hasGoogleAuth={serviceStatus.authGoogle}
-          />
-        {:else if $profileOptionsStore === ProfileOptions.FAT_SECRET}
-          <FatSecret
-            onComplete={initServiceAuth}
-            hasFSAuth={serviceStatus.authFatSecret}
-          />
-        {/if}
-        <div class="spacer" />
-      {/if}
+  {#if !isLoading}
+    {#if err != null || undefined}
+      <div class="center">
+        <ErrorRetry {err} onRetry={initServiceAuth} errTitle={null} />
+      </div>
     {:else}
+      <div class="center">
+        <div class="flex-display">
+          <button class="my-button">Анкета</button>
+          <ServiceConnect
+            serviceName={"Google"}
+            hasServiceAuth={serviceStatus.authGoogle.status}
+            isLoginProcess={$isLoginProcessStore.isGoogleProcess}
+            onComplete={initServiceAuth}
+            onServiceAuth={() =>
+              isLoginProcessStore.set(
+                new ServiceLoginProcess(
+                  true,
+                  $isLoginProcessStore.isFatSecretProcess
+                )
+              )}
+            url={serviceStatus.authGoogle.url}
+          />
+          <ServiceConnect
+            serviceName={"Fat Secret"}
+            hasServiceAuth={serviceStatus.authFatSecret.status}
+            isLoginProcess={$isLoginProcessStore.isFatSecretProcess}
+            onComplete={initServiceAuth}
+            onServiceAuth={() =>
+              isLoginProcessStore.set(
+                new ServiceLoginProcess(
+                  $isLoginProcessStore.isGoogleProcess,
+                  true
+                )
+              )}
+            url={serviceStatus.authFatSecret.url}
+          />
+        </div>
+      </div>
       <div class="spacer" />
-      <CircularProgressIndicator />
-      <div class="spacer" />
+      <div>
+        <button class="my-button">Назад</button>
+        <button class="my-button" on:click={initServiceAuth}>OK</button>
+      </div>
     {/if}
-  </div>
-</BottomNavBar>
+  {:else}
+    <div class="center">
+      <CircularProgressIndicator />
+    </div>
+  {/if}
+</div>
 
 <style scoped>
   .container {
@@ -84,11 +96,14 @@
     flex-direction: column;
     justify-content: flex-start; /* Прижимаем к верху */
     align-items: center;
+    height: 90vh;
     margin-top: 20px; /* Отступ сверху 20px */
   }
 
-  .my-error {
-    text-align: center;
-    color: var(--md-sys-color-error);
+  .flex-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>
