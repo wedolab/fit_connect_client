@@ -25,25 +25,21 @@
   });
 
   async function startLoading() {
-    const loginPromise = getBaseQuest($userStore.id);
+    const loginPromise = getBaseQuest($userStore.id).catch((reason) => {
+      console.log(reason);
+      err = reason;
+    });
     const timerPromise = new Promise((resolve) => setTimeout(resolve, 5000));
 
-    await Promise.all([loginPromise, timerPromise])
-      .then(([hasQuest, _]) => {
-        if (hasQuest) {
-          goto("/home");
-          isLoading = false;
-        } else {
-          goto("/home");
-          isLoading = false;
-        }
-      })
-      .catch((reason) => {
-        if (reason != null || undefined) {
-          console.log(reason);
-          err = reason;
-        }
-      });
+    await Promise.all([loginPromise, timerPromise]).then(([hasQuest, _]) => {
+      if (hasQuest) {
+        goto("/home");
+        isLoading = false;
+      } else {
+        goto("/home");
+        isLoading = false;
+      }
+    });
   }
 
   async function retryLogin() {
